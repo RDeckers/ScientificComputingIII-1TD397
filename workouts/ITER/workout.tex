@@ -1,0 +1,106 @@
+\input{../../preamble.tex}
+\usepackage[]{algorithm2e}
+\begin{document}
+  \maketitle[Scientific Computing III]{Workout 1}
+
+  \section{}
+  \subsection{}
+  Note that
+  \begin{align}
+    A =
+    \begin{pmatrix}
+      2&1&\\
+      1&2&1\\
+      &1&2
+    \end{pmatrix}\implies
+    &D^{-1} = \begin{pmatrix}
+      \frac{1}{2}&&\\
+      &\frac{1}{2}&\\
+      &&\frac{1}{2}
+    \end{pmatrix},\;
+    R = \begin{pmatrix}
+      &1&\\
+      1&&1\\
+      &1&
+    \end{pmatrix}
+  \end{align}
+  and that
+  \begin{align}
+    b = \begin{pmatrix}
+    \alpha\\0\\\beta
+  \end{pmatrix},\; u^{(0)} = \begin{pmatrix}
+  0\\0\\0
+\end{pmatrix}
+  \end{align}
+  Then Jacobi iteration gives
+  \begin{align}
+    u^{(1)} &= D^{-1}\left(b-Ru^{(0)}\right)\nn
+    &= \begin{pmatrix}
+      \frac{1}{2}&&\\
+      &\frac{1}{2}&\\
+      &&\frac{1}{2}
+    \end{pmatrix}\left(  \begin{pmatrix}
+      \alpha\\0\\\beta
+    \end{pmatrix}-\begin{pmatrix}
+      &1&\\
+      1&&1\\
+      &1&
+    \end{pmatrix}\begin{pmatrix}
+    0\\0\\0
+  \end{pmatrix}\right)\nn
+  &= \begin{pmatrix}
+  \frac{\alpha}{2}\\0\\\frac{\beta}{2}
+  \end{pmatrix}
+  \end{align}
+and subsequently
+\begin{align}
+  u^{(2)} &= D^{-1}\left(b-Ru^{(1)}\right)\nn
+  &= \begin{pmatrix}
+    \frac{1}{2}&&\\
+    &\frac{1}{2}&\\
+    &&\frac{1}{2}
+  \end{pmatrix}\left(  \begin{pmatrix}
+    \alpha\\0\\\beta
+  \end{pmatrix}-\begin{pmatrix}
+    &1&\\
+    1&&1\\
+    &1&
+  \end{pmatrix}\begin{pmatrix}
+  \frac{\alpha}{2}\\0\\\frac{\beta}{2}
+  \end{pmatrix}\right)\nn
+&= \frac{1}{2}\begin{pmatrix}
+\alpha\\\frac{-(\alpha+\beta)}{2}\\\beta
+\end{pmatrix}
+\end{align}
+  \subsection{}
+  \begin{algorithm}[H]
+    $D_{\text{inv}} \Leftarrow diag(1./diag($A$))$\;
+    $R \Leftarrow A-diag(diag(A))$\;
+    $u \Leftarrow u^{(0)}$\;
+    \Repeat{termination condition not met}{$u \Leftarrow D_{\text{inv}}*\left(b-R*u\right)$\;}
+    \caption{Jacobi Iteration for non-descript termination condition}
+    \label{alg:jacobi}
+  \end{algorithm}
+
+\section{}
+  Iterative methods converge iff $\left|{\rho(G)}\right| < 1$. To see that this is the case
+  Subtract the result of step $i$ from the result of step $i+1$ to get an expression of the error.
+  This amounts to
+  \begin{align}
+    Gu^{(k)}+c-u^{(k)} &= Gu^{(k)}+c - \left(Gu^{(k-1)}+c\right)\nn
+    &= G\Delta^{(k)}
+  \end{align}
+   where $\Delta^{(k)} = u^{(k)}-u^{(k-1)}$. This converges if and only for random $u$ if all the eigenvalues of $G$ are less than unity in absolute value (thus causing all components of the error in eigenvector space to reduce at each iteration).
+
+  \subsection{}
+   Fits the above criteria and will thus converge.
+  \subsection{}
+   contains a term equal to unity and will therefore not converge.
+
+\section{}
+The power method can be stated as: "repeatedly multiply-by-A-and-normalize".
+Doing so gives the values $u^{(1)} = \left[0.700001, -0.714142\right]^T$ and $u^{(2)} = \left[-1., 0.\right]^T$.
+This gives us an eigenvalue estimation of $Au^{(2)}\cdot u^{(2)} = 0.495$ with eigenvector $u^{(2)}$. This is obviously not a correct value, which can be attributed to the matrix having complex eigenvalues.
+
+
+\end{document}
