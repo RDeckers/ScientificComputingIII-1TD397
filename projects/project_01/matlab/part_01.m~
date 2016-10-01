@@ -1,0 +1,17 @@
+figure(1)
+n= 16
+iteration = 1;
+while n<=512
+    A = create_matrices(n);
+    real_eigenvalue = max(eig(full(A)));
+    eigenvalues = eig_power(A);
+    steps(iteration) = size(eigenvalues,2);
+    N(iteration) = n;
+    iteration++;
+    errors = abs(eigenvalues-real_eigenvalue);
+    loglog(errors(1:end));
+    hold on;
+    n = n*2;
+end 
+figure(2)
+plot(steps)

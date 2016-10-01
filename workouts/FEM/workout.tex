@@ -1,0 +1,44 @@
+\input{../../preamble.tex}
+\usepackage[]{algorithm2e}
+\begin{document}
+  \maketitle[Scientific Computing III]{Workout 2}
+
+  \section{}
+  \subsection{}
+  The weak form is given by multiplying by $v$ and integrating, and subsequenly using partial integration to get rid of the second derivative. Using the definitions given
+    \begin{align}
+      (f,v) &= (au-u'',v)\nn
+      &= a(u,v)-(u'',v)\nn
+      &= a(u,v)+(u',v') \quad\text{(see lecture notes)}
+    \end{align}
+  \subsection{}
+   Find $u_h \in V_h$ such that
+   \begin{align}
+     (f, v_h) = a(u_h, v_h) + (u'_h, v'_h)\quad\forall v_h \in V_h
+   \end{align}
+   Or, being more explicit:
+   \begin{align}
+     \int_0^1 f(x)\phi_j(x)\,\d{x} = \sum_{i=1}^{n-1}  c_i \int_0^1  \left(a \phi_i(x)\phi_j(x) + \phi_i'(x)\phi_j'(x)\right)\,\d{x}\quad \forall j=1,\ldots,n-1.
+   \end{align}
+\subsection{}
+  let $\vec c$ be the vector with elements $c_i$, let $\vec b$ be the vector whose $i$'th element is given by $\int_0^1f(x)\phi_i(x)\,\d{x}$, finally let $K$ be the matrix given by
+  $K_{i,j} = \int_0^1  \left(a \phi_i(x)\phi_j(x) + \phi_i'(x)\phi_j'(x)\right)\,\d{x}$.
+  Note that
+  \begin{align}
+    \phi_j'(x) &= \frac{1}{h_j}\quad\forall x \in [x_{j-1}, x_j],\nn
+               &= -\frac{1}{h_{j+1}}\quad\forall x \in [x_{j}, x_{j+1}],\nn
+    &= 0\quad\text{otherwise.}
+\end{align}
+  From this it follows that
+  \begin{align}
+    \int_0^1 \phi_i'(x)\phi_j'(x)\d{x} &= \frac{1}{h_i^2}+\frac{1}{h_{i+1}^2} \quad\text{if }i=j\nn
+    &=-\frac{1}{h_i}\quad\text{if }j = i-1\nn
+    &=-\frac{1}{h_{i+1}}\quad\text{if }j = i+1\nn
+  \end{align}
+which implies
+\begin{align}
+  K_{i,i} &= \frac{2a}{3n}+\frac{1}{h_i^2}+\frac{1}{h_{i+1}^2}\\
+  K_{i,i-1} &= \frac{a}{6n}-\frac{1}{h_i}\\
+  K_{i,i+1} &= \frac{a}{6n}-\frac{1}{h_{i+1}}
+\end{align}
+\end{document}

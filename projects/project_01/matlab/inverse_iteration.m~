@@ -1,0 +1,7 @@
+function [ eigenvalue ] = inverse_iteration( A, mu )
+%INVERSE_ITERATION Summary of this function goes here
+%   Detailed explanation goes here
+    eigenvalue = power_iteration(inv(A-mu*diag(ones(size(A,1),1),0)));
+ 
+end
+
