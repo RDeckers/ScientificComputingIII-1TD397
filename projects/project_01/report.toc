@@ -1,0 +1,17 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Creating the matrices $K$, $M$, and $A$}{1}{section.1}
+\contentsline {section}{\numberline {2}Power method}{1}{section.2}
+\contentsline {subsection}{\numberline {a}Implementation}{1}{subsection.2.1}
+\contentsline {subsection}{\numberline {b}Convergence}{1}{subsection.2.2}
+\contentsline {subsection}{\numberline {c}Results}{2}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {c.1}Eigenvector}{2}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {c.2}Iterations vs. Matrix Size}{2}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {c.3}Error}{2}{subsubsection.2.3.3}
+\contentsline {section}{\numberline {3}Inverse iteration}{2}{section.3}
+\contentsline {subsection}{\numberline {a}Implementation}{2}{subsection.3.1}
+\contentsline {subsection}{\numberline {b}Convergence}{2}{subsection.3.2}
+\contentsline {subsection}{\numberline {c}results}{3}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {c.1}Eigenvectors}{3}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {c.2}iterations vs. matrix size}{3}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {c.3}error vs. matrix size}{3}{subsubsection.3.3.3}
+\contentsline {section}{\numberline {A}Source Code}{4}{appendix.A}
