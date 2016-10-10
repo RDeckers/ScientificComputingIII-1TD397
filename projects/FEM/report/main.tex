@@ -1,0 +1,64 @@
+\input{../../../preamble.tex}
+\usepackage[]{algorithm2e}
+\begin{document}
+  \maketitle[Scientific Computing III]{Project 2}
+  \section{Model Problem}
+  With the given model parameters the model equation can be written as
+  \begin{align}
+    \left(1-\drv[x^2]{^2}\right)T-20 = 0.
+  \end{align}
+  The solution to this equation is
+  \begin{align}
+    T(x) = 20+c_1 e^x +c_2 e^{-x}
+  \end{align}
+  The values of constants $c_1$ and  $c_2$ are given by the boundary values and can be calculated as
+  \begin{align}
+    T(0) &= 40\nn
+    20 + c_1 + c_2 &= 40\nn
+    \implies& c_1 = 20-c_2
+  \end{align}
+  and
+  \begin{align}
+    T(10) = 200\nn
+    20+(20-c_2)e^{10}+c_2 e^{-10} = 200\nn
+    c_2\left(e^{-10}-e^{10}\right) = 180-20e^{10}\nn
+    c_2 = \frac{180-20e^{10}}{e^{-10}-e^{10}}
+  \end{align}
+\par For the FEM formulation we will use an equidistant grid and hat-functions, identified by $v$, as base elements. We will also
+do a change of coordinates to switch our x-range from $[0,10]$ to the cannonical $[0,1]$.
+The Weak Form is given by
+\begin{align}
+  -\inp{T''}{v} &= \inp{T_\text{ext}}{v}-\inp{T}{v}\nn
+  \inp{T'}{v'} + \inp{T}{v}&= \inp{T_\text{ext}}{v}
+\end{align}
+This means using standard notation we can state the problem as: find $T_h \in V_h$ such that
+\begin{align}
+  (T_\text{ext}, v_h) = (T_h, v_h) + (T'_h, v'_h)\quad\forall v_h \in V_h
+\end{align}
+Or, being more explicit:
+\begin{align}
+  T_\text{ext} \int_0^1 \phi_j(x)\,\d{x} = \sum_{i=1}^{n-1}  c_i \int_0^1  \left(\phi_i(x)\phi_j(x) + \phi_i'(x)\phi_j'(x)\right)\,\d{x}\quad \forall j=1,\ldots,n-1.
+\end{align}
+\subsection{}
+let $\vec c$ be the vector with elements $c_i$, let $\vec b$ be the vector whose $i$'th element is given by $T_\text{ext}\int_0^1\phi_i(x)\,\d{x} = T_\text{ext}2\int_0^h\frac{x}{h}\,\d{x}=T_\text{ext}h$, finally let $K$ be the matrix given by
+$K_{i,j} = \int_0^1  \left(\phi_i(x)\phi_j(x) + \phi_i'(x)\phi_j'(x)\right)\,\d{x}$.
+Note that
+\begin{align}
+ \phi_j'(x) &= \frac{1}{h_j}\quad\forall x \in [x_{j-1}, x_j],\nn
+            &= -\frac{1}{h_{j+1}}\quad\forall x \in [x_{j}, x_{j+1}],\nn
+ &= 0\quad\text{otherwise.}
+\end{align}
+From this it follows that
+\begin{align}
+ \int_0^1 \phi_i'(x)\phi_j'(x)\d{x} &= \frac{1}{h_i^2}+\frac{1}{h_{i+1}^2} \quad\text{if }i=j\nn
+ &=-\frac{1}{h_i}\quad\text{if }j = i-1\nn
+ &=-\frac{1}{h_{i+1}}\quad\text{if }j = i+1\nn
+\end{align}
+(note that all $h_i$ are considered equal) which, using the integrals given in the workout, implies
+\begin{align}
+K_{i,i} &= \frac{2}{3}h+\frac{2}{h^2}\\
+K_{i,i-1} &= \frac{1}{6}h-\frac{1}{h}\\
+K_{i,i+1} &= \frac{1}{6}h-\frac{1}{h}
+\end{align}
+
+\end{document}
