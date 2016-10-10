@@ -1,0 +1,43 @@
+\input{../../preamble.tex}
+\usepackage[]{algorithm2e}
+\begin{document}
+  \maketitle[Scientific Computing III]{Workout 3}
+
+\section{}
+ This method can be described (ignoring the boundary conditions) as
+\begin{align}
+  D_{+,t}u = D_{0,x}u
+\end{align}
+or equivalently
+The error of $D_{+,t}$ can be determined using Taylor expension in the following fashion (we expand around $\bar x$):
+\begin{align}
+  u(\bar x + \Delta)&\approx
+    u(\bar x)\pm \Delta u'(\bar x)
+    + \frac{1}{2}\Delta^2u''(\bar x)
+    \pm \frac{1}{6}\Delta^3u'''(\bar x)
+    + \O(\Delta)^4
+\end{align}
+From this we find that
+\begin{align}
+  D_{+,t}u &= \frac{u(x, \bar t + \Delta t) - u(x, \bar t)}{\Delta t},\nn
+  &= \frac{\Delta t \pdrv[t]{u} + \frac{1}{2}\Delta t^2\pdrv[t^2]{^2 u} + \O(\Delta t^3)}{\Delta t},\nn
+  &= \pdrv[t]{u} + \frac{1}{2}\Delta t\pdrv[t^2]{^2 u} + \O(\Delta t^2).
+\end{align}
+And
+\begin{align}
+  D_{0,x}u &= \frac{u(\bar x + \Delta x, t) - u(\bar x - \Delta x, t)}{2\Delta x},\nn
+  &= \frac{2 \Delta x \pdrv[x]{u} + 2 \frac{1}{6}\Delta x^3\pdrv[x^3]{^3 u}+\O(\Delta x^4)}{2 \Delta x},\nn
+  &= \pdrv[x]{u}+\frac{1}{6}\Delta x^2\pdrv[x^3]{^3 u}+\O(\Delta x^3).
+\end{align}
+Now we can compute the local truncation error by subtracting the rhs from the lhs of the approximate model (dropping the big-oh terms):
+\begin{align}
+  \tau(x,t) &= D_{+,t}u-D_{0,x}u\nn
+  &= \left(\pdrv[t]{u} + \frac{1}{2}\Delta t\pdrv[t^2]{^2 u}\right)-\left(\pdrv[x]{u}+\frac{1}{6}\Delta x^2\pdrv[x^3]{^3 u}\right)\nn
+  &= \pdrv[t]{u} - \pdrv[x]{u} + \left(\frac{1}{2}\Delta t\pdrv[t^2]{^2 u} - +\frac{1}{6}\Delta x^2\pdrv[x^3]{^3 u}\right)
+\end{align}
+\section{}
+The above equation shows that the order-of-accuracy is $\O\left(\Delta t + \Delta x^2\right)$
+\section{}
+A method is said to be consistent if $\tau(x,t)\to 0$ as $\Delta x, \Delta t \to 0$. This is the case here (the 'real' derivatives are equal
+by the definition) so the method is consistent.
+\end{document}
