@@ -1,0 +1,111 @@
+\input{../preamble.tex}
+\begin{document}
+  \maketitle[Scientific Computing III]{Summary}
+\tableofcontents
+\section{Partial Differential Equations}
+\section{Iterative Methods}
+%\subsection{Gaussian Elmination}
+\subsection{Jacobi}
+Jacobi's method is an iterative matrix-splitting method for solving linear systems of equations $Ax=b$.
+\subsubsection{The Method}
+Take $A = D-L-U$, and define $A = M-N$ where $M = D, N = L+U$ then solve
+\begin{align}
+  Du^+ =  (L+U)u +b.
+\end{align}
+Or, define $G = M^{-1}$ and $c = M^{-1}b$ then
+\begin{align}
+  u^+ = Gu+c.
+\end{align}
+A fixed point of this expression (equilibrium) corresponds to the answer of the original equation.
+\subsubsection{Stability}
+\label{sec:Jacobi_stab}
+Let $u^*$ be the real solution to the equation. Then the error at step $k$ is given by
+\begin{align}
+  e^{[k]} &= u^{[k]}-u^*\nn
+  &=\left(Gu^{[k-1]}+c\right) - \left(Gu^*+c\right)\nn
+  &=Ge^{[k-1]}\nn
+  &=G^ke^{[0]}
+\end{align}
+From this we see that the method will converger if the spectral radius of $G < 1$.
+\subsubsection{Rate-of-Convergence}
+\label{sec:Jacobi_conv}
+If the method converges, we can get the rate of convergence from the stability condition by looking at the 2-norm.
+Assume $G$ can be diagonallized as
+\begin{align}
+  G^k = R\Lambda^kR^{-1}
+\end{align}
+then the the two-norm of the error is bound by
+\begin{align}
+  ||e^{[k]}||_2 \leq ||\Lambda^k||_2||R||_2||R^{-1}||_2||e^{[0]}||_2 = \rho(G)^k ||R||_2||R^{-1}||_2 ||e^{[0]}||_2.
+\end{align}
+If the matrix is a normal matrix (for example Hermitian or Skew-Hermitian) then the product of $R$-norms is unity and the error is
+bounded by the spectral radius. That is the method converges linearly proportional to the spectral radius of $G$.
+
+\subsection{Gauss-Seidel}
+Gauss-Seidel's method is an iterative matrix-splitting method for solving linear systems of equations $Ax=b$.
+\subsubsection{The Method}
+Take $A = D-L-U$, and define $A = M-N$ where $M = D-L, N = U$ then solve
+\begin{align}
+  (D-L)u^+ =  Uu +b.
+\end{align}
+Which can be solved effetcively via forward subsitution.
+Or, define $G = M^{-1}$ and $c = M^{-1}b$ then
+\begin{align}
+  u^+ = Gu+c.
+\end{align}
+A fixed point of this expression (equilibrium) corresponds to the answer of the original equation.
+\subsubsection{Stability}
+See section \ref{sec:Jacobi_stab}.
+\subsubsection{Rate-of-Convergence}
+See section \ref{sec:Jacobi_conv}. In practice, the GS-method often performs better by about a factor of two, but has the same asymptotic behaviour.
+
+\subsection{Succesive Over-Relaxation (SOR)}
+SOR is an iterative matrix-splitting method for solving linear systems of equations $Ax=b$.
+\subsubsection{The Method}
+Take $A = D-L-U$, and define $A = M-N$ where $M = \frac{1}{\omega}\left(D-\omega L\right), N = \frac{1}{\omega}\left(\left(1-\omega\right)D+\omega U\right)$ then solve
+\begin{align}
+  Mu^+ =  Nu + b.
+\end{align}
+A more efficient way to look at this method is to compute the delta of a GS step and multiply it by $\omega$.
+\subsubsection{Stability}
+This method is much harder to analyze than the other methods. One theorem states that if $A$ is SPD and $D-\omega L$ is non-singular the method converges for all $0 < \omega < 2$.
+
+\subsubsection{Rate-of-Convergence}
+Rate of convergence is better than the other methods, determining the optimal or even stable $\omega$ can be quite difficult so in practice this method is only used
+for the special cases where ideal values are known or at the least the bounds.
+
+\subsection{Power Method}
+\subsubsection{The Method}
+The power rmethod can be used to compute the dominant eigenvalue $\lambda$ of a matrix $A$ along with
+it's dominant eigenvector $b$.
+\par The method, in it's simplest form is:
+\begin{align}
+  &b = b_0\nn
+  &\text{repeat:}\nn
+  &\qquad b = \frac{Ab}{||Ab||}\nn
+  &\qquad \lambda = \frac{b^*Ab}{b^*b}\nn
+  &\text{until termination condition met}
+\end{align}
+\par The method converges linearlly proportional to $|\lambda_1|/|\lambda_2|$. That is, the more dominant the first dominant eigenvalue is
+the quicker it converges.
+
+\subsection{Steepest Descent}
+As the name implies, the SD method is a decent method. These solve linear systems $Au=f$ for the case where $A=S$PD by noting that if one defines
+\begin{align}
+  \phi(u) = \frac{1}{2}u^TAu - u^Tf,
+\end{align}
+then the gradient is given by
+\begin{align}
+  \grad \phi(u) = Au-f
+\end{align}
+and therefore if one minimizes $\phi$ one finds the $u$ which solves the original equation.
+
+\subsubsection{The Method}
+The method can be summarized as "Move in the directio  of the gradient at each step with step-size $\alpha$".
+We can chose $\alpha$ fixed or compute it at each iteration. The ideal form of $\alpha$ can be determined by derivation w.r.t. to $alpha$ and setting that equal to 0.
+
+\subsubsection{Convergence}
+
+\section{Finite Element Method}
+\section{Finite Difference Method}
+\end{document}
